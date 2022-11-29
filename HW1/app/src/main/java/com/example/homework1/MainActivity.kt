@@ -4,7 +4,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.text.InputType
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -14,12 +16,40 @@ import com.example.homework1.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var displayText = ""
-    private var PERMISSION_CODE = 100;
+    private var permissioncode = 100
+    private val speedDials = Array(3){ "-" ; "-"; "-"}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.speeddial1.setOnClickListener {
+            addTextView(speedDials[0], true)
+        }
+        binding.speeddial2.setOnClickListener {
+            addTextView(speedDials[1], true)
+        }
+        binding.speeddial3.setOnClickListener {
+            addTextView(speedDials[2], true)
+        }
+        binding.speeddial1.setOnLongClickListener {
+            /*val intent = Intent(this, MainActivity2::class.java)
+            startActivity(intent)*/
+            showdialog(0)
+            true
+        }
+        binding.speeddial2.setOnLongClickListener {
+            /*val intent = Intent(this, MainActivity2::class.java)
+            startActivity(intent)*/
+            showdialog(1)
+            true
+        }
+        binding.speeddial3.setOnLongClickListener {
+            /*val intent = Intent(this, MainActivity2::class.java)
+            startActivity(intent)*/
+            showdialog(2)
+            true
+        }
         binding.button0.setOnClickListener{
             addTextView("0", clear = false)
         }
@@ -68,25 +98,60 @@ class MainActivity : AppCompatActivity() {
 
     private fun addTextView(s: String, clear: Boolean) {
         if(clear) {
-            if(displayText.isEmpty()){
-                return
-            }
-            displayText = displayText.substring(0,displayText.length-1)
-            binding.result.setText(displayText)
+           if(s == ""){
+               if(displayText.isEmpty()){
+                   return
+               }
+               displayText = displayText.substring(0,displayText.length-1)
+               binding.result.text = displayText
+           }
+            else{
+               displayText = s
+               binding.result.text = displayText
+           }
         } else {
             displayText += s
-            binding.result.setText(displayText)
+            binding.result.text = displayText
         }
     }
 
-    fun dialPhoneNumber(phoneNumber: String) {
+    private fun dialPhoneNumber(phoneNumber: String) {
         if (ContextCompat.checkSelfPermission(this,android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CALL_PHONE),
-                PERMISSION_CODE)
+                permissioncode)
 
         } else {
-            val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber))
+            val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:$phoneNumber"))
             startActivity(intent)
         }
     }
+
+    private fun showdialog(id: Int){
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle("Speed Dial Details")
+        builder.setMessage("Enter the name to be associated with the following number: $displayText" )
+        val input = EditText(this)
+        input.hint = "Enter the name"
+        input.inputType = InputType.TYPE_CLASS_TEXT
+        builder.setView(input)
+        builder.setPositiveButton("OK") { _, _ ->
+            var name = input.text.toString()
+            if(name.length > 6){
+                name = name.substring(0,6)
+            }
+            speedDials[id] = displayText
+            when(id) {
+                0 -> binding.speeddial1.text = name
+                1 -> binding.speeddial2.text = name
+                else -> binding.speeddial3.text = name
+            }
+        }
+        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+        builder.show()
+
+    }
+
+
 }
+
+

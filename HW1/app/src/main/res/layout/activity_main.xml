@@ -9,6 +9,49 @@
     tools:layout_editor_absoluteY="-356dp">
 
 
+    <Button
+        android:id="@+id/speeddial3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/defaultspeeddial"
+        android:textAllCaps="false"
+        app:backgroundTint="#434343"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintStart_toEndOf="@+id/speeddial2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+
+    <Button
+        android:id="@+id/speeddial1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/defaultspeeddial"
+        android:textAllCaps="false"
+        app:backgroundTint="#434343"
+        app:layout_constraintBottom_toTopOf="@+id/button1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/speeddial2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/defaultspeeddial"
+        android:textAllCaps="false"
+        app:backgroundTint="#434343"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintStart_toEndOf="@+id/speeddial1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
     <TextView
         android:id="@+id/result"
         android:layout_width="307dp"
@@ -45,7 +88,8 @@
         app:layout_constraintHorizontal_bias="0.99"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.133" />
+        app:layout_constraintVertical_bias="0.133"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/button2"
@@ -157,10 +201,11 @@
         app:iconSize="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button0"
-        app:layout_constraintVertical_bias="0.648" />
+        app:layout_constraintVertical_bias="0.648"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/buttonplus"
